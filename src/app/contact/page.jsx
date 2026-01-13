@@ -1,0 +1,88 @@
+import React from "react";
+
+const ContactPage = () => {
+  return (
+    <div className="min-h-screen bg-gray-50 text-gray-800">
+      {/* Header */}
+      <section className="bg-white shadow-sm py-16">
+        <div className="max-w-5xl mx-auto px-4 text-center">
+          <h1 className="text-4xl font-bold">Contact Us</h1>
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+            Have questions about our childcare or elderly care services? We’re here to help.
+            Get in touch with us and our support team will respond as soon as possible.
+          </p>
+        </div>
+      </section>
+
+      {/* Content */}
+      <section className="max-w-6xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Contact Info */}
+        <div>
+          <h2 className="text-2xl font-semibold mb-6">Get in Touch</h2>
+          <p className="text-gray-600 mb-8">
+            Whether you need a reliable caregiver or have questions about our platform,
+            feel free to contact us using the information below.
+          </p>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="font-medium">Email</h3>
+              <p className="text-gray-600">support@care.io</p>
+            </div>
+            <div>
+              <h3 className="font-medium">Phone</h3>
+              <p className="text-gray-600">+880 1XXX-XXXXXX</p>
+            </div>
+            <div>
+              <h3 className="font-medium">Office Address</h3>
+              <p className="text-gray-600">Dhaka, Bangladesh</p>
+            </div>
+            <div>
+              <h3 className="font-medium">Working Hours</h3>
+              <p className="text-gray-600">Saturday – Thursday: 9:00 AM – 6:00 PM</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Contact Form */}
+        <div className="bg-white p-8 rounded-xl shadow-md">
+          <h2 className="text-2xl font-semibold mb-6">Send Us a Message</h2>
+          <form className="space-y-5">
+            <div>
+              <label className="block text-sm font-medium mb-1">Full Name</label>
+              <input
+                type="text"
+                placeholder="Your full name"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Email Address</label>
+              <input
+                type="email"
+                placeholder="you@example.com"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Message</label>
+              <textarea
+                rows="4"
+                placeholder="Write your message here..."
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default ContactPage;
