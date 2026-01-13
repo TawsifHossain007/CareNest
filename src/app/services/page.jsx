@@ -1,12 +1,12 @@
-import Service from '@/components/home/Services';
-import React from 'react';
+import Service from "@/components/home/Services";
+import React from "react";
 
 const ServicePage = () => {
-    return (
-        <div>
-            <Service></Service>
-        </div>
-    );
+  return (
+    <div className="min-h-screen">
+      <Service />
+    </div>
+  );
 };
 
 export default ServicePage;

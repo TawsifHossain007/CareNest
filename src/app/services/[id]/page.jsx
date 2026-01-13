@@ -107,15 +107,11 @@ const ServiceDetails = async ({ params }) => {
 
             {/* CTA pinned at bottom */}
             <div className="pt-6">
-              <Link href={`/booking/${slug}`}>
+              <Link href={`/services/${service._id}/booking`}>
                 <button className="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-xl font-semibold text-lg transition">
                   Book This Service
                 </button>
               </Link>
-
-              <p className="text-sm text-center text-gray-500 mt-2">
-                You may need to log in to complete your booking.
-              </p>
             </div>
           </div>
         </div>
