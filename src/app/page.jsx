@@ -2,9 +2,11 @@ import About from "@/components/home/About";
 import Banner from "@/components/home/Banner";
 import Overview from "@/components/home/Overview";
 import Testimonials from "@/components/home/Testimonials";
-import Image from "next/image";
+import { authOptions } from "@/lib/authOptions";
+import { getServerSession } from "next-auth";
 
-export default function Home() {
+export default async function Home() {
+  const session = getServerSession(authOptions)
   return (
    <div className="space-y-20">
       <section>

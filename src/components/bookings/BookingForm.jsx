@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import CancelButton from "../buttons/CancelButton";
 
 // Dummy district list (replace later with real data / API)
 const DISTRICTS = [
@@ -25,8 +26,8 @@ const BookingForm = ({ service }) => {
     address: "",
   });
 
-  const pricePerHour = service?.pricePerHour
-  const pricePerDay = service?.pricePerDay 
+  const pricePerHour = service?.pricePerHour;
+  const pricePerDay = service?.pricePerDay;
 
   const totalCost = useMemo(() => {
     if (!durationValue || durationValue <= 0) return 0;
@@ -153,9 +154,7 @@ const BookingForm = ({ service }) => {
             type="text"
             placeholder="City (optional)"
             value={location.city}
-            onChange={(e) =>
-              setLocation({ ...location, city: e.target.value })
-            }
+            onChange={(e) => setLocation({ ...location, city: e.target.value })}
             className="border rounded-lg px-4 py-2"
           />
         </div>
@@ -175,12 +174,8 @@ const BookingForm = ({ service }) => {
       {/* ================= Cost Section ================= */}
       <div className="border-t pt-6 space-y-2">
         <div className="flex justify-between text-sm text-gray-600">
-          <span>
-            Rate ({durationType === "hour" ? "Hourly" : "Daily"})
-          </span>
-          <span>
-            ৳{durationType === "hour" ? pricePerHour : pricePerDay}
-          </span>
+          <span>Rate ({durationType === "hour" ? "Hourly" : "Daily"})</span>
+          <span>৳{durationType === "hour" ? pricePerHour : pricePerDay}</span>
         </div>
 
         <div className="flex justify-between font-semibold text-gray-800">
@@ -190,17 +185,23 @@ const BookingForm = ({ service }) => {
       </div>
 
       {/* ================= Submit ================= */}
-      <button
-        type="submit"
-        disabled={!isFormValid}
-        className={`w-full py-3 rounded-lg font-medium transition ${
-          isFormValid
-            ? "bg-primary text-white hover:bg-primary/90"
-            : "bg-gray-300 text-gray-500 cursor-not-allowed"
-        }`}
-      >
-        Confirm Booking
-      </button>
+      <div className="flex flex-col md:flex-row items-center gap-3">
+        <button
+          type="submit"
+          disabled={!isFormValid}
+          className={`w-full btn py-6 rounded-lg font-medium transition flex-2 ${
+            isFormValid
+              ? "bg-primary text-white hover:bg-primary/90"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
+        >
+          Confirm Booking
+        </button>
+        <div className="w-full md:max-w-fit">
+                  <CancelButton></CancelButton>
+
+        </div>
+      </div>
 
       <p className="text-xs text-gray-400 text-center">
         Your booking will be saved as{" "}

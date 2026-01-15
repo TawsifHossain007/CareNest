@@ -20,7 +20,7 @@ const BannerSlider = ({ services = [] }) => {
   const service = services[current];
 
   return (
-    <div className="relative h-[80vh] w-full overflow-hidden">
+    <div className="relative h-[80vh] w-full overflow-hidden" suppressHydrationWarning>
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
@@ -65,8 +65,9 @@ const BannerSlider = ({ services = [] }) => {
                 className="mt-8 flex items-center gap-4"
               >
                 <Link
-                  href={`/services/${service.slug}`}
+                  href={`/services/${service._id}`}
                   className="btn btn-primary rounded-full px-8"
+                  suppressHydrationWarning
                 >
                   View Service
                 </Link>

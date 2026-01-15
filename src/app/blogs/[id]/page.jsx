@@ -1,6 +1,7 @@
 import { getSingleBlog, getSingleService } from "@/actions/server/Blogs";
 import React from "react";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 const BlogDetails = async ({ params }) => {
   const { id } = await params;
@@ -71,9 +72,9 @@ const BlogDetails = async ({ params }) => {
                 Care.IO connects you with verified caregivers for babysitting,
                 elderly care, and personalized home assistance.
               </p>
-              <button className="btn btn-primary">
+              <Link href={'/services'} className="btn btn-primary">
                 Book a Caregiver
-              </button>
+              </Link>
             </div>
           </div>
         </article>

@@ -6,7 +6,7 @@ const CancelButton = () => {
     <div>
       <button
         type="button"
-        className="px-8 py-4 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition"
+        className="w-full py-6 btn btn-primary btn-outline rounded-xl font-semibold transition"
         onClick={() => window.history.back()}
       >
         Cancel

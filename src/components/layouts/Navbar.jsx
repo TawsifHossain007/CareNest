@@ -59,7 +59,7 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{nav}</ul>
         </div>
         <div className="navbar-end space-x-4">
-          <Link href={"/cart"} className="btn btn-primary">
+          <Link href={"/my-bookings"} className="btn btn-primary">
             {" "}
             <CiBookmarkCheck size={25} className="font-black"></CiBookmarkCheck>{" "}
           </Link>
