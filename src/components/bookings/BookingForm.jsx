@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 import CancelButton from "../buttons/CancelButton";
+import { createCheckoutSession } from "@/actions/server/Stripe";
 
 // Dummy district list (replace later with real data / API)
 const DISTRICTS = [
@@ -16,6 +20,10 @@ const DISTRICTS = [
 ];
 
 const BookingForm = ({ service }) => {
+  const { data: session } = useSession();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  
   const [durationType, setDurationType] = useState("hour"); // hour | day
   const [durationValue, setDurationValue] = useState(1);
 
@@ -42,20 +50,43 @@ const BookingForm = ({ service }) => {
     location.district &&
     location.address;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!session?.user) {
+      Swal.fire("Error", "Please login to book a service", "error");
+      router.push("/login");
+      return;
+    }
+
+    setIsLoading(true);
 
     const bookingData = {
       serviceId: service._id,
+      serviceName: service.name,
+      customerName: session.user.name,
+      customerEmail: session.user.email,
       durationType,
       durationValue,
       location,
       totalCost,
-      status: "pending",
     };
 
-    console.log("Booking Data:", bookingData);
-    // TODO: send to backend
+    try {
+      const result = await createCheckoutSession(bookingData);
+      
+      if (result.url) {
+        // Redirect to Stripe checkout
+        window.location.href = result.url;
+      } else {
+        Swal.fire("Error", result.error || "Failed to create checkout session", "error");
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error("Booking error:", error);
+      Swal.fire("Error", "Something went wrong", "error");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -188,18 +219,17 @@ const BookingForm = ({ service }) => {
       <div className="flex flex-col md:flex-row items-center gap-3">
         <button
           type="submit"
-          disabled={!isFormValid}
+          disabled={!isFormValid || isLoading}
           className={`w-full btn py-6 rounded-lg font-medium transition flex-2 ${
-            isFormValid
+            isFormValid && !isLoading
               ? "bg-primary text-white hover:bg-primary/90"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
         >
-          Confirm Booking
+          {isLoading ? "Processing..." : "Proceed to Payment"}
         </button>
         <div className="w-full md:max-w-fit">
-                  <CancelButton></CancelButton>
-
+          <CancelButton />
         </div>
       </div>
 

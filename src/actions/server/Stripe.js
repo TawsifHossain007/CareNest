@@ -1,85 +1,125 @@
+"use server";
 
-export const paymentStripe = () => {
-    
-}
-    
-    app.post("/create-checkout-session", verifyFBToken, async (req, res) => {
-      const paymentInfo = req.body;
-      const session = await stripe.checkout.sessions.create({
-        line_items: [
-          {
-            // Provide the exact Price ID (for example, price_1234) of the product you want to sell
-            price_data: {
-              currency: "bdt",
-              product_data: {
-                name: paymentInfo.subscriptionType + " Subscription",
-              },
-              unit_amount: parseInt(paymentInfo.amount * 100), // amount in cents
+import Stripe from "stripe";
+import { collections, dbConnect } from "@/lib/dbConnect";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+export const createCheckoutSession = async (bookingData) => {
+  try {
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price_data: {
+            currency: "bdt",
+            product_data: {
+              name: bookingData.serviceName,
+              description: `${bookingData.durationType === "hour" ? "Hourly" : "Daily"} booking for ${bookingData.durationValue} ${bookingData.durationType}(s)`,
             },
-
-            quantity: 1,
+            unit_amount: parseInt(bookingData.totalCost * 100), // Stripe uses smallest unit
           },
-        ],
-        customer_email: paymentInfo.reporterEmail,
-        mode: "payment",
-        metadata: {
-          reporterName: paymentInfo.reporterName,
-          reporterEmail: paymentInfo.reporterEmail,
-          subscriptionType: paymentInfo.subscriptionType,
+          quantity: 1,
         },
-        success_url: `${process.env.SITE_DOMAIN}/dashboard/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.SITE_DOMAIN}/dashboard/payment-cancel`,
-      });
-      res.send({ url: session.url });
+      ],
+      customer_email: bookingData.customerEmail,
+      mode: "payment",
+      metadata: {
+        serviceId: bookingData.serviceId,
+        serviceName: bookingData.serviceName,
+        customerName: bookingData.customerName,
+        customerEmail: bookingData.customerEmail,
+        durationType: bookingData.durationType,
+        durationValue: bookingData.durationValue.toString(),
+        location: JSON.stringify(bookingData.location),
+        totalCost: bookingData.totalCost.toString(),
+      },
+      success_url: `${process.env.NEXTAUTH_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXTAUTH_URL}/payment-cancel`,
     });
 
-    app.patch("/payment-success", verifyFBToken, async (req, res) => {
-      const session_id = req.query.session_id;
-      const session = await stripe.checkout.sessions.retrieve(session_id);
+    return { url: session.url };
+  } catch (error) {
+    console.error("Stripe error:", error);
+    return { error: "Payment session creation failed" };
+  }
+};
 
-      const transactionId = session.payment_intent;
+export const handlePaymentSuccess = async (session_id) => {
+  if (!session_id) {
+    return { success: false, message: "Session ID missing" };
+  }
 
-      const query = { transactionId: transactionId };
-      const existingPayment = await paymentCollection.findOne(query);
-      if (existingPayment) {
-        return res.send({
-          success: true,
-          transactionId,
-          message: "Payment already processed.",
-        });
-      }
+  try {
+    // Retrieve Stripe session
+    const session = await stripe.checkout.sessions.retrieve(session_id);
 
-      if (session.payment_status === "paid") {
-        const email = session.metadata.reporterEmail;
+    if (!session) {
+      return { success: false, message: "Invalid session" };
+    }
 
-        const query = { email: email };
+    const transactionId = session.payment_intent;
+    const paymentCollection = dbConnect(collections.PAYMENT);
+    const bookingCollection = dbConnect(collections.BOOKING);
 
-        const updatedDOC = {
-          $set: {
-            status: "Premium",
-          },
-        };
-        const result = await usersCollection.updateOne(query, updatedDOC);
+    // Prevent duplicate processing
+    const existingPayment = await paymentCollection.findOne({ transactionId });
 
-        const paymentRecord = {
-          amount: session.amount_total / 100,
-          currency: session.currency,
-          subscriptionType: session.metadata.subscriptionType,
-          CustomerName: session.metadata.reporterName,
-          CustomerEmail: session.metadata.reporterEmail,
-          paymentDate: new Date(),
-          transactionId: session.payment_intent,
-          paymentStatus: session.payment_status,
-        };
+    if (existingPayment) {
+      return {
+        success: true,
+        transactionId,
+        message: "Payment already processed",
+      };
+    }
 
-        const resultPayment = await paymentCollection.insertOne(paymentRecord);
+    // Process only if payment is successful
+    if (session.payment_status !== "paid") {
+      return { success: false, message: "Payment not completed" };
+    }
 
-        return res.send({
-          success: true,
-          modifyProfile: result,
-          transactionId: session.payment_intent,
-          paymentInfo: resultPayment,
-        });
-      }
-      return res.send({ success: false });
-    });
+    // Parse location from metadata
+    const location = JSON.parse(session.metadata.location);
+
+    // Save booking record
+    const bookingRecord = {
+      serviceId: session.metadata.serviceId,
+      serviceName: session.metadata.serviceName,
+      customerName: session.metadata.customerName,
+      customerEmail: session.metadata.customerEmail,
+      durationType: session.metadata.durationType,
+      durationValue: parseInt(session.metadata.durationValue),
+      location,
+      totalCost: parseFloat(session.metadata.totalCost),
+      status: "confirmed",
+      transactionId,
+      bookingDate: new Date(),
+    };
+
+    const bookingResult = await bookingCollection.insertOne(bookingRecord);
+
+    // Save payment record
+    const paymentRecord = {
+      bookingId: bookingResult.insertedId.toString(),
+      amount: session.amount_total / 100,
+      currency: session.currency,
+      serviceName: session.metadata.serviceName,
+      customerName: session.metadata.customerName,
+      customerEmail: session.metadata.customerEmail,
+      paymentDate: new Date(),
+      transactionId,
+      paymentStatus: session.payment_status,
+    };
+
+    const paymentResult = await paymentCollection.insertOne(paymentRecord);
+
+    return {
+      success: true,
+      transactionId,
+      bookingId: bookingResult.insertedId.toString(),
+      paymentId: paymentResult.insertedId.toString(),
+    };
+  } catch (error) {
+    console.error("Payment success handler error:", error);
+    return { success: false, message: "Failed to process payment" };
+  }
+};

@@ -46,24 +46,27 @@ export const authOptions = {
     async redirect({ url, baseUrl }) {
       return baseUrl;
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       if (token) {
-        session.role = token?.role;
-        session.email = token?.email;
+        session.user.role = token?.role;
+        session.user.email = token?.email;
+        session.user.image = token?.image;
       }
       return session;
     },
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token, user, account }) {
       if (user) {
-        if (account.provider == "google") {
+        if (account?.provider === "google") {
           const dbUser = await dbConnect(collections.USERS).findOne({
             email: user.email,
           });
           token.role = dbUser?.role;
           token.email = dbUser?.email;
+          token.image = dbUser?.Photo;
         } else {
           token.role = user?.role;
           token.email = user?.email;
+          token.image = user?.Photo;
         }
       }
       return token;
