@@ -90,7 +90,7 @@ export const handlePaymentSuccess = async (session_id) => {
       durationValue: parseInt(session.metadata.durationValue),
       location,
       totalCost: parseFloat(session.metadata.totalCost),
-      status: "confirmed",
+      status: "pending",
       transactionId,
       bookingDate: new Date(),
     };

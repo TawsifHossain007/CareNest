@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { handlePaymentSuccess } from "@/actions/server/Stripe";
 import Link from "next/link";
 
 export default function PaymentSuccess() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const [status, setStatus] = useState("loading");
   const [paymentData, setPaymentData] = useState(null);
 
