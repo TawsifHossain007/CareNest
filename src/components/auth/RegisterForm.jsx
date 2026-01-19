@@ -40,11 +40,8 @@ export const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    console.log("Form data before submit:", form);
-    
     try {
       const result = await PostUser(form);
-      console.log("PostUser result:", result);
       
       if (result?.acknowledged) {
         const signInResult = await signIn("credentials", {

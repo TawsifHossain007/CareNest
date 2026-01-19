@@ -16,7 +16,6 @@ export async function proxy(req) {
       new URL(`/login?callbackUrl=${reqPath}`, req.url)
     );
   }
-  console.log({ token, isPrivateReq, reqPath, isAuthenticated });
 
   return NextResponse.next();
 }

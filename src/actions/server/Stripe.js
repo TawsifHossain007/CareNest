@@ -2,6 +2,8 @@
 
 import Stripe from "stripe";
 import { collections, dbConnect } from "@/lib/dbConnect";
+import { sendEmail } from "@/lib/sendEmail";
+import { orderInvoiceTemplate } from "@/lib/orderInvoice";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -30,6 +32,7 @@ export const createCheckoutSession = async (bookingData) => {
         customerEmail: bookingData.customerEmail,
         durationType: bookingData.durationType,
         durationValue: bookingData.durationValue.toString(),
+        serviceDate: bookingData.serviceDate,
         location: JSON.stringify(bookingData.location),
         totalCost: bookingData.totalCost.toString(),
       },
@@ -84,6 +87,7 @@ export const handlePaymentSuccess = async (session_id) => {
     const bookingRecord = {
       serviceId: session.metadata.serviceId,
       serviceName: session.metadata.serviceName,
+      serviceDate: session.metadata.serviceDate,
       customerName: session.metadata.customerName,
       customerEmail: session.metadata.customerEmail,
       durationType: session.metadata.durationType,
@@ -111,6 +115,28 @@ export const handlePaymentSuccess = async (session_id) => {
     };
 
     const paymentResult = await paymentCollection.insertOne(paymentRecord);
+
+    // Send order invoice email
+    const userCollection = dbConnect(collections.USERS);
+    const user = await userCollection.findOne({ email: session.metadata.customerEmail });
+    
+    if (user) {
+      await sendEmail({
+        to: user.email,
+        subject: "🎉 Booking Confirmation - CareNest",
+        html: orderInvoiceTemplate({
+          orderId: bookingResult.insertedId.toString(),
+          customerName: session.metadata.customerName,
+          serviceName: session.metadata.serviceName,
+          durationType: session.metadata.durationType,
+          durationValue: session.metadata.durationValue,
+          location: location,
+          totalCost: parseFloat(session.metadata.totalCost),
+          transactionId: transactionId,
+          bookingDate: new Date(),
+        }),
+      });
+    }
 
     return {
       success: true,

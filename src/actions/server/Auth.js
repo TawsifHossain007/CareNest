@@ -36,7 +36,6 @@ export const PostUser = async (payload) => {
       );
 
       const data = await response.json();
-      console.log("ImgBB Response:", data);
       
       if (data.success) {
         photoURL = data.data.url;

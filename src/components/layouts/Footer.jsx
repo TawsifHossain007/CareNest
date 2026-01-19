@@ -74,7 +74,7 @@ const Footer = () => {
       {/* Copyright */}
       <aside>
         <p>
-          Copyright © {new Date().getFullYear()} - All rights reserved by MovieHub
+          Copyright © {new Date().getFullYear()} - All rights reserved by CareNest
           Industries Ltd
         </p>
       </aside>

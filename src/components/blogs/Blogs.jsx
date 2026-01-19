@@ -87,7 +87,7 @@ const Blogs = async() => {
           Need Trusted Care Services?
         </h2>
         <p className="max-w-xl mx-auto mb-6 opacity-90">
-          Find reliable babysitters and elderly caregivers easily with Care.IO.
+          Find reliable babysitters and elderly caregivers easily with CareNest.
         </p>
         <button className="btn btn-secondary">
           Book a Caregiver

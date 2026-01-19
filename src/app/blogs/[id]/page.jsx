@@ -59,7 +59,7 @@ const BlogDetails = async ({ params }) => {
               </span>
 
               <span className="text-sm font-medium text-primary">
-                Care.IO • Trusted Care Solutions
+                CareNest • Trusted Care Solutions
               </span>
             </div>
 
@@ -69,7 +69,7 @@ const BlogDetails = async ({ params }) => {
                 Need Trusted Care Services?
               </h3>
               <p className="text-gray-600 mb-5 max-w-xl mx-auto">
-                Care.IO connects you with verified caregivers for babysitting,
+                CareNest connects you with verified caregivers for babysitting,
                 elderly care, and personalized home assistance.
               </p>
               <Link href={'/services'} className="btn btn-primary">

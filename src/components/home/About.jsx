@@ -21,7 +21,7 @@ const About = () => {
             About Us
           </h2>
           <p className="text-gray-600 mb-4">
-            At Care.IO, our mission is to make caregiving simple, secure, and reliable. 
+            At CareNest, our mission is to make caregiving simple, secure, and reliable. 
             We connect families with trusted professionals for child care, elderly care, 
             and special home services. Our platform ensures safety, convenience, and peace of mind.
           </p>

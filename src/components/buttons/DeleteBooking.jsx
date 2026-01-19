@@ -23,6 +23,7 @@ const DeleteBooking = ({ bookingId }) => {
             text: "Your booking has been cancelled.",
             icon: "success",
           });
+          // revalidatePath() in the server action handles the cache invalidation
         } catch (error) {
           Swal.fire({
             title: "Error!",

@@ -7,7 +7,7 @@ const Testimonials = () => {
       name: "Sarah Johnson",
       role: "Mother",
       comment:
-        "Care.IO provided an amazing babysitter for my little one. I feel confident knowing my child is in safe hands!",
+        "CareNest provided an amazing babysitter for my little one. I feel confident knowing my child is in safe hands!",
       image: "https://randomuser.me/api/portraits/women/44.jpg",
     },
     {

@@ -33,7 +33,7 @@ const ContactPage = () => {
           <div className="space-y-6">
             <div>
               <h3 className="font-medium">Email</h3>
-              <p className="text-gray-600">support@care.io</p>
+              <p className="text-gray-600">support@carenest.io</p>
             </div>
             <div>
               <h3 className="font-medium">Phone</h3>
