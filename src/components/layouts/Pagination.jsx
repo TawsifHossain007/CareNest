@@ -2,15 +2,23 @@
 
 import Link from "next/link";
 
-const Pagination = ({ page, totalPages, search }) => {
+const Pagination = ({ page, totalPages, search, sort }) => {
   if (totalPages <= 1) return null;
+
+  const buildUrl = (pageNumber) => {
+    const params = new URLSearchParams();
+    if (search) params.set("search", search);
+    if (sort) params.set("sort", sort);
+    params.set("page", pageNumber.toString());
+    return `?${params.toString()}`;
+  };
 
   return (
     <div className="flex justify-center mt-12">
       <div className="join">
         {/* Previous */}
         <Link
-          href={`?search=${search}&page=${page - 1}`}
+          href={buildUrl(page - 1)}
           className={`join-item btn border-0 ${page === 1 ? "btn-disabled" : ""}`}
         >
           Prev
@@ -22,7 +30,7 @@ const Pagination = ({ page, totalPages, search }) => {
           return (
             <Link
               key={pageNumber}
-              href={`?search=${search}&page=${pageNumber}`}
+              href={buildUrl(pageNumber)}
               className={`join-item btn border-0 ${
                 page === pageNumber ? "btn-primary" : "btn-outline"
               }`}
@@ -34,7 +42,7 @@ const Pagination = ({ page, totalPages, search }) => {
 
         {/* Next */}
         <Link
-          href={`?search=${search}&page=${page + 1}`}
+          href={buildUrl(page + 1)}
           className={`join-item btn border-0 ${
             page === totalPages ? "btn-disabled" : ""
           }`}

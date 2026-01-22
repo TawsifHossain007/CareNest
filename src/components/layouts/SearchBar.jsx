@@ -6,29 +6,39 @@ import { useState, useEffect } from "react";
 const SearchBar = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [value, setValue] = useState(searchParams.get("search") || "");
+  
+  // Get current search from URL
+  const currentSearch = searchParams.get("search") || "";
+  const [searchValue, setSearchValue] = useState(currentSearch);
 
-  // Update URL when user types (debounced)
+  // Simple debounced search
   useEffect(() => {
     const timer = setTimeout(() => {
-      const params = new URLSearchParams(searchParams.toString());
+      // Only update URL if search value is different from current URL
+      if (searchValue !== currentSearch) {
+        const params = new URLSearchParams(searchParams.toString());
+        
+        if (searchValue.trim()) {
+          params.set("search", searchValue.trim());
+          params.set("page", "1");
+        } else {
+          params.delete("search");
+          if (params.get("page") === "1") {
+            params.delete("page");
+          }
+        }
 
-      if (value.trim()) {
-        params.set("search", value.trim());
-        params.set("page", "1");
-      } else {
-        params.delete("search");
-        params.delete("page");
-      }
-
-      const newURL = `/services?${params.toString()}`;
-      if (window.location.pathname + window.location.search !== newURL) {
-        router.push(newURL);
+        router.push(`/services?${params.toString()}`);
       }
     }, 400);
 
     return () => clearTimeout(timer);
-  }, [value]);
+  }, [searchValue, currentSearch, searchParams, router]);
+
+  // Keep input in sync with URL (for back/forward navigation)
+  if (searchValue !== currentSearch) {
+    setSearchValue(currentSearch);
+  }
 
   return (
     <label className="input flex items-center gap-2">
@@ -52,8 +62,8 @@ const SearchBar = () => {
       <input
         type="search"
         placeholder="Search Services"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
         className="grow"
       />
     </label>
