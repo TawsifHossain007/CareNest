@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 import Service from "@/components/home/Services";
 import { getService } from "@/actions/server/Service";
 import SearchBar from "@/components/layouts/SearchBar";
+import Pagination from "@/components/layouts/Pagination";
 
 export const metadata = {
   title: "All Services",
@@ -44,6 +45,8 @@ const { services, total, page, totalPages } = data;
       </div>
 
       <Service services={services} />
+
+      <Pagination page={page} totalPages={totalPages} search={resolvedSearchParams?.search || ""}></Pagination>
     </div>
   );
 };

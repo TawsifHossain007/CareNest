@@ -7,9 +7,7 @@ export async function getService({
   search = "",
   page = 1,
   limit = 9,
-}) {
-  console.log("getService called with:", { search, page, limit }); // Debug log
-  
+}) {  
   const skip = (page - 1) * limit;
 
   const query = search
