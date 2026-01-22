@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const SearchBar = () => {
   const router = useRouter();
@@ -10,12 +10,12 @@ const SearchBar = () => {
   // Get current search from URL
   const currentSearch = searchParams.get("search") || "";
   const [searchValue, setSearchValue] = useState(currentSearch);
+  const isTyping = useRef(false);
 
   // Simple debounced search
   useEffect(() => {
-    const timer = setTimeout(() => {
-      // Only update URL if search value is different from current URL
-      if (searchValue !== currentSearch) {
+    if (isTyping.current) {
+      const timer = setTimeout(() => {
         const params = new URLSearchParams(searchParams.toString());
         
         if (searchValue.trim()) {
@@ -29,16 +29,24 @@ const SearchBar = () => {
         }
 
         router.push(`/services?${params.toString()}`);
-      }
-    }, 400);
+        isTyping.current = false;
+      }, 400);
 
-    return () => clearTimeout(timer);
-  }, [searchValue, currentSearch, searchParams, router]);
+      return () => clearTimeout(timer);
+    }
+  }, [searchValue, searchParams, router]);
 
-  // Keep input in sync with URL (for back/forward navigation)
-  if (searchValue !== currentSearch) {
-    setSearchValue(currentSearch);
-  }
+  // Keep input in sync with URL only when not typing
+  useEffect(() => {
+    if (!isTyping.current && searchValue !== currentSearch) {
+      setSearchValue(currentSearch);
+    }
+  }, [currentSearch]);
+
+  const handleInputChange = (e) => {
+    isTyping.current = true;
+    setSearchValue(e.target.value);
+  };
 
   return (
     <label className="input flex items-center gap-2">
@@ -63,7 +71,7 @@ const SearchBar = () => {
         type="search"
         placeholder="Search Services"
         value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
+        onChange={handleInputChange}
         className="grow"
       />
     </label>
