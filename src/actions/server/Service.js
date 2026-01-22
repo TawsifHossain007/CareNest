@@ -3,11 +3,47 @@
 import { collections, dbConnect } from "@/lib/dbConnect"
 import { ObjectId } from "mongodb";
 
+export async function getService({
+  search = "",
+  page = 1,
+  limit = 9,
+}) {
+  console.log("getService called with:", { search, page, limit }); // Debug log
+  
+  const skip = (page - 1) * limit;
 
-export const getService = async()=> {
-    const result = await dbConnect(collections.SERVICES).find().toArray()
-    return result;
+  const query = search
+    ? {
+        $or: [
+          { name: { $regex: search, $options: "i" } },
+          { category: { $regex: search, $options: "i" } },
+        ],
+      }
+    : {};
+
+  console.log("MongoDB query:", query); // Debug log
+
+  const collection = dbConnect(collections.SERVICES);
+
+  const services = await collection
+    .find(query)
+    .skip(skip)
+    .limit(limit)
+    .toArray();
+
+  const total = await collection.countDocuments(query);
+
+  console.log("Query results:", { servicesFound: services.length, total }); // Debug log
+
+  return {
+    services,
+    total,
+    page,
+    totalPages: Math.ceil(total / limit),
+  };
 }
+
+
 
 export const getSingleService = async (id) => {
   if (id.length != 24) {

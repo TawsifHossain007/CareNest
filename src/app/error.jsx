@@ -44,7 +44,7 @@ const ErrorPage = () => {
 
         {/* Footer Note */}
         <p className="mt-8 text-sm text-gray-500">
-          Care.IO — Reliable Home Healthcare You Can Trust
+          CareNest — Reliable Home Healthcare You Can Trust
         </p>
       </div>
     </div>

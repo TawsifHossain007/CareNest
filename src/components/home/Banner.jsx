@@ -2,7 +2,7 @@ import { getService } from "@/actions/server/Service";
 import BannerSlider from "./BannerSlider";
 
 const Banner = async () => {
-  const services = await getService();
+  const services = await getService().services;
   const activeServices = services?.filter((s) => s.isActive);
 
   // Convert MongoDB objects to plain objects
