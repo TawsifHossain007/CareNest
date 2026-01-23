@@ -67,7 +67,7 @@ export const RegisterForm = () => {
     <div className="min-h-screen flex items-center justify-center bg-base-200">
       <div className="card w-full max-w-sm shadow-xl bg-base-100">
         <div className="card-body">
-          <h2 className="text-2xl font-bold text-center">Create Account</h2>
+          <h2 className="text-2xl font-bold text-center text-primary">Create Account</h2>
 
           <form
                onSubmit={handleSubmit}

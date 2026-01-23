@@ -23,7 +23,7 @@ const ServiceCard = ({ service }) => {
           </span>
 
           {/* Service Name */}
-          <h3 className="text-xl font-bold mt-1 text-primary">
+          <h3 className="text-xl font-bold mt-1 text-secondary">
             {service.name}
           </h3>
 

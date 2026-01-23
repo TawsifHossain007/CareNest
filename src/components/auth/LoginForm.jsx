@@ -35,15 +35,19 @@ const LoginForm = () => {
     }
   };
 
+  const handleAutoFill = () => {
+    const form = document.querySelector("form");
+    form.email.value = "kevin@gmail.com";
+    form.password.value = "T@wsif";
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200">
       <div className="card w-full max-w-sm shadow-xl bg-base-100">
         <div className="card-body">
-          <h2 className="text-2xl font-bold text-center">Login</h2>
+          <h2 className="text-2xl font-bold text-center text-primary">Login</h2>
 
-          <form
-           onSubmit={handleSubmit}
-            className="space-y-3">
+          <form onSubmit={handleSubmit} className="space-y-3">
             <input
               type="email"
               name="email"
@@ -76,6 +80,10 @@ const LoginForm = () => {
               Register
             </Link>
           </p>
+
+          <button onClick={handleAutoFill} type="submit" className="btn btn-primary w-full mt-5">
+            Auto-Fill User Credentials
+          </button>
         </div>
       </div>
     </div>

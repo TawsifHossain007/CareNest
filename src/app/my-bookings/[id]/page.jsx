@@ -50,7 +50,7 @@ const BookingDetails = async ({ params }) => {
           {/* Header */}
           <div className="border-b px-8 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-2xl font-bold text-secondary">
                 Booking Details
               </h1>
               <p className="text-sm text-gray-500 mt-1">
@@ -76,7 +76,7 @@ const BookingDetails = async ({ params }) => {
           <div className="px-8 py-8 grid grid-cols-1 lg:grid-cols-2 gap-10">
             {/* Booking Info */}
             <section>
-              <h2 className="text-lg font-semibold text-gray-800 mb-4">
+              <h2 className="text-lg font-semibold text-secondary mb-4">
                 Booking Information
               </h2>
 
@@ -124,7 +124,7 @@ const BookingDetails = async ({ params }) => {
             {/* Service Info */}
             {service && service._id && (
               <section className="bg-gray-50 rounded-2xl p-6">
-                <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                <h2 className="text-lg font-semibold text-secondary mb-4">
                   Service Details
                 </h2>
 

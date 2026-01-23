@@ -24,7 +24,7 @@ const ServicePage = async ({ searchParams }) => {
 
   return (
     <div className="min-h-screen">
-      <h2 className="text-4xl text-center font-bold mb-15">Our Services</h2>
+      <h2 className="text-4xl text-center font-bold mb-15 text-primary">Our Services</h2>
 
       <div className="mb-15 flex items-center justify-between">
         <SearchBar />

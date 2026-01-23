@@ -29,7 +29,7 @@ const Blogs = async() => {
             <span className="text-primary font-semibold mb-2">
               Featured Article
             </span>
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+            <h2 className="text-3xl font-bold text-secondary mb-4">
               {blogs[0].title}
             </h2>
             <p className="text-gray-600 mb-6">
@@ -47,7 +47,7 @@ const Blogs = async() => {
 
       {/* Blog Grid */}
       <section className="max-w-7xl mx-auto px-6 pb-24">
-        <h3 className="text-3xl font-bold text-gray-800 mb-10 text-center">
+        <h3 className="text-3xl font-bold text-primary mb-10 text-center">
           Latest Articles
         </h3>
 
@@ -63,7 +63,7 @@ const Blogs = async() => {
                 className="h-56 w-full object-cover"
               />
               <div className="p-6 flex flex-col grow">
-                <h4 className="text-xl font-semibold text-gray-800 mb-3">
+                <h4 className="text-xl font-semibold text-secondary mb-3">
                   {blog.title}
                 </h4>
                 <p className="text-gray-600 mb-4 grow">

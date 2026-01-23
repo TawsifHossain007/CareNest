@@ -8,29 +8,29 @@ const Overview = () => {
       title: "Baby Care",
       description:
         "Trusted caregivers to look after your little ones with love and safety.",
-      icon: <FaBaby className="text-4xl text-blue-600 mb-4" />,
+      icon: <FaBaby className="text-4xl text-primary mb-4" />,
     },
     {
       id: 2,
       title: "Elderly Service",
       description:
         "Compassionate support for seniors to ensure comfort, care, and companionship.",
-      icon: <FaUserNurse className="text-4xl text-green-600 mb-4" />,
+      icon: <FaUserNurse className="text-4xl text-secondary mb-4" />,
     },
     {
       id: 3,
       title: "Sick People Service",
       description:
         "Professional caregivers to assist patients and ensure proper home care.",
-      icon: <FaProcedures className="text-4xl text-red-600 mb-4" />,
+      icon: <FaProcedures className="text-4xl text-accent mb-4" />,
     },
   ];
 
   return (
-    <section className=" py-16 px-6 md:px-16">
+    <section className="py-20 px-6 bg-base-200">
       <div className="max-w-6xl mx-auto text-center mb-12">
-        <h2 className="text-4xl font-bold text-gray-800 mb-4">Our Services</h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+        <h2 className="text-4xl font-bold text-primary mb-6">Our Services</h2>
+        <p className="text-neutral max-w-2xl mx-auto leading-relaxed">
           We provide trusted and reliable care services for your loved ones, ensuring comfort, safety, and peace of mind.
         </p>
       </div>
@@ -39,13 +39,13 @@ const Overview = () => {
         {services.map((service) => (
           <div
             key={service.id}
-            className="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition"
+            className="bg-base-100 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-base-300"
           >
             <div className="flex justify-center">{service.icon}</div>
-            <h3 className="text-2xl font-semibold text-gray-800 mb-2 text-center">
+            <h3 className="text-2xl font-semibold text-secondary mb-4 text-center">
               {service.title}
             </h3>
-            <p className="text-gray-600 text-center">{service.description}</p>
+            <p className="text-neutral text-center leading-relaxed">{service.description}</p>
           </div>
         ))}
       </div>

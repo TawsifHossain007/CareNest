@@ -17,7 +17,7 @@ const MyBookings = async () => {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
         <div className="max-w-md">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-600">No Bookings Found</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-primary">No Bookings Found</h2>
           <p className="text-gray-500 mb-6">
             You have not made any bookings yet. Explore our services and book your first appointment!
           </p>
@@ -31,7 +31,7 @@ const MyBookings = async () => {
 
   return (
     <div>
-      <h1 className="font-bold text-4xl pt-2">My Bookings</h1>
+      <h1 className="font-bold text-4xl pt-2 text-primary">My Bookings</h1>
       <div className="overflow-x-auto mt-10">
         <table className="table table-zebra">
           {/* head */}

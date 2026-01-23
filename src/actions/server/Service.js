@@ -10,7 +10,7 @@ export async function getService({
   maxPrice,
   sort = "",
   page = 1,
-  limit = 9,
+  limit = 12,
 }) {
   const skip = (page - 1) * limit;
 

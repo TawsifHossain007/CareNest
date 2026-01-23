@@ -66,7 +66,7 @@ export default function PaymentSuccess() {
               />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">
+          <h1 className="text-2xl font-bold text-error mb-2">
             Payment Failed
           </h1>
           <p className="text-gray-600 mb-6">
@@ -99,7 +99,7 @@ export default function PaymentSuccess() {
           </svg>
         </div>
 
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">
+        <h1 className="text-2xl font-bold text-success mb-2">
           Payment Successful!
         </h1>
         <p className="text-gray-600 mb-6">

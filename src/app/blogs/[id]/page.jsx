@@ -65,7 +65,7 @@ const BlogDetails = async ({ params }) => {
 
             {/* CTA */}
             <div className="mt-12 bg-primary/10 rounded-xl p-6 text-center">
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">
+              <h3 className="text-2xl font-bold text-secondary mb-3">
                 Need Trusted Care Services?
               </h3>
               <p className="text-gray-600 mb-5 max-w-xl mx-auto">

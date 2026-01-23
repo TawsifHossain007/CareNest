@@ -107,7 +107,7 @@ const BookingForm = ({ service }) => {
     >
       {/* ================= Booking Details ================= */}
       <section>
-        <h2 className="text-lg font-semibold text-gray-800 mb-1">
+        <h2 className="text-lg font-semibold text-secondary mb-1">
           Booking Details
         </h2>
         <p className="text-sm text-gray-500 mb-6">
@@ -180,7 +180,7 @@ const BookingForm = ({ service }) => {
 
       {/* ================= Location ================= */}
       <section className="bg-gray-50 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-1">
+        <h2 className="text-lg font-semibold text-secondary mb-1">
           Service Location
         </h2>
         <p className="text-sm text-gray-500 mb-6">

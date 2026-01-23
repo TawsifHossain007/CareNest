@@ -45,7 +45,7 @@ const AuthButtons = () => {
                     alt="User"
                   />
 
-                  <h3 className="font-bold text-lg">{user.name}</h3>
+                  <h3 className="font-bold text-lg text-secondary">{user.name}</h3>
                   <p className="text-sm opacity-70">{user.email}</p>
                 </li>
 

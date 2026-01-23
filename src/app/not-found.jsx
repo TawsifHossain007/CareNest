@@ -13,7 +13,7 @@ const NotFoundPage = () => {
         </div>
 
         {/* Title */}
-        <h1 className="text-2xl font-semibold text-gray-800 mb-2">
+        <h1 className="text-2xl font-semibold text-primary mb-2">
           Page Not Found
         </h1>
 

@@ -20,7 +20,7 @@ const ServiceBooking = async ({ params }) => {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-2xl font-semibold text-gray-800">
+            <h1 className="text-2xl font-semibold text-primary">
               Book {service.name}
             </h1>
             <p className="text-sm text-gray-500">
@@ -39,7 +39,7 @@ const ServiceBooking = async ({ params }) => {
           {/* Right: Service Summary */}
           <div className="lg:col-span-1">
             <div className="sticky top-24 bg-white rounded-xl shadow-sm border p-6 space-y-4">
-              <h2 className="text-lg font-semibold text-gray-800">
+              <h2 className="text-lg font-semibold text-secondary">
                 Service Summary
               </h2>
 
