@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 
-const Pagination = ({ page, totalPages, search, sort }) => {
+const Pagination = ({ page, totalPages, search, sort, category }) => {
   if (totalPages <= 1) return null;
 
   const buildUrl = (pageNumber) => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
     if (sort) params.set("sort", sort);
+    if (category) params.set("category", category);
     params.set("page", pageNumber.toString());
     return `?${params.toString()}`;
   };

@@ -5,6 +5,7 @@ import { getService } from "@/actions/server/Service";
 import SearchBar from "@/components/layouts/SearchBar";
 import Pagination from "@/components/layouts/Pagination";
 import SortDropdown from "@/components/layouts/SortDropdown";
+import FilterDropdown from "@/components/layouts/FilterDropdown";
 
 export const metadata = {
   title: "All Services",
@@ -14,6 +15,7 @@ const ServicePage = async ({ searchParams }) => {
   const resolvedSearchParams = await searchParams;
   const data = await getService({
     search: resolvedSearchParams?.search || "",
+    category: resolvedSearchParams?.category || "",
     sort: resolvedSearchParams?.sort || "",
     page: Number(resolvedSearchParams?.page) || 1,
   });
@@ -26,7 +28,10 @@ const ServicePage = async ({ searchParams }) => {
 
       <div className="mb-15 flex items-center justify-between">
         <SearchBar />
-        <SortDropdown currentSort={resolvedSearchParams?.sort || ""} />
+        <div className="flex items-center justify-center gap-4">
+          <FilterDropdown />
+          <SortDropdown currentSort={resolvedSearchParams?.sort || ""} />
+        </div>
       </div>
 
       <Service services={services} />
@@ -36,6 +41,7 @@ const ServicePage = async ({ searchParams }) => {
         totalPages={totalPages}
         search={resolvedSearchParams?.search || ""}
         sort={resolvedSearchParams?.sort || ""}
+        category={resolvedSearchParams?.category || ""}
       />
     </div>
   );
