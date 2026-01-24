@@ -3,6 +3,9 @@ import React from "react";
 import { MdOutlineInfo } from "react-icons/md";
 import DeleteBooking from "@/components/buttons/DeleteBooking";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
+import { redirect } from "next/navigation";
 
   export const metadata = {
   title: "My Bookings",
@@ -11,6 +14,10 @@ import Link from "next/link";
 
 
 const MyBookings = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session?.user) {
+    redirect('/login?callbackUrl=/my-bookings');
+  }
  
   const bookings = await GetBookings();  
   if (bookings.length === 0) {

@@ -10,6 +10,12 @@ import { revalidatePath } from "next/cache"
 
 export const GetBookings = cache(async() => {
     const session = await getServerSession(authOptions)
+    
+    if (!session?.user) {
+        // Redirect to login if not authenticated
+        throw new Error('Unauthorized - Please login to view your bookings')
+    }
+    
     const user = session?.user
     const query = {customerEmail : user?.email}
     const result = await dbConnect(collections.BOOKING).find(query).toArray()

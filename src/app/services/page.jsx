@@ -26,9 +26,9 @@ const ServicePage = async ({ searchParams }) => {
     <div className="min-h-screen">
       <h2 className="text-4xl text-center font-bold mb-15 text-primary">Our Services</h2>
 
-      <div className="mb-15 flex items-center justify-between">
+      <div className="mb-15 flex flex-col md:flex-row items-center justify-between">
         <SearchBar />
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex mt-5 md:mt-0 items-center justify-center gap-4">
           <FilterDropdown />
           <SortDropdown currentSort={resolvedSearchParams?.sort || ""} />
         </div>

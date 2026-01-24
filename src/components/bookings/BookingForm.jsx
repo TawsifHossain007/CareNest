@@ -62,7 +62,8 @@ const BookingForm = ({ service }) => {
 
     if (!session?.user) {
       Swal.fire("Login Required", "Please login to book a service", "warning");
-      router.push("/login");
+      const currentUrl = window.location.pathname;
+      router.push(`/login?callbackUrl=${encodeURIComponent(currentUrl)}`);
       return;
     }
 

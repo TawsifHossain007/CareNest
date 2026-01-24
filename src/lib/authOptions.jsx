@@ -8,12 +8,13 @@ export const authOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {},
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const user = await LoginUser({
           email: credentials.email,
           password: credentials.password,
         });
         // Return null if user data could not be retrieved
+        console.log(user)
         return user;
       },
     }),
@@ -22,11 +23,15 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  pages: {
+    signIn: '/login',
+  },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn({ user, account }) {
       const isExist = await dbConnect(collections.USERS).findOne({
         email: user.email,
       });
+              console.log(isExist)
       if (isExist) {
         return true;
       }
@@ -44,6 +49,11 @@ export const authOptions = {
     },
 
     async redirect({ url, baseUrl }) {
+      // If url is relative, prepend baseUrl
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // If url is on the same origin, return it
+      if (new URL(url).origin === baseUrl) return url;
+      // Otherwise return baseUrl for security
       return baseUrl;
     },
     async session({ session, token }) {
