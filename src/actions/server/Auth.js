@@ -17,7 +17,7 @@ export const PostUser = async (payload) => {
     return { message: "user exists" };
   }
 
-  //upload image to imgbb
+  //upload image on imgbbb
   let photoURL = null;
   if (image) {
     try {

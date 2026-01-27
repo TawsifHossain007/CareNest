@@ -26,7 +26,8 @@ const LoginForm = () => {
 
       if (result.ok) {
         Swal.fire("Success", "Welcome back!", "success");
-        router.push(callback);
+        // router.push(callback);
+        window.location.href = callback;
       } else {
         Swal.fire("Error", "Invalid email or password", "error");
       }

@@ -11,7 +11,7 @@ import { PostUser } from "@/actions/server/Auth";
 export const RegisterForm = () => {
   const params = useSearchParams();
   const router = useRouter();
-  const callbackUrl = params.get("callbackUrl") || "/";
+  const HomeUrl = "/";
   const handleChange = (e) => {
     if (e.target.name === "image") {
       const file = e.target.files[0];
@@ -48,11 +48,11 @@ export const RegisterForm = () => {
           email: form.email,
           password: form.password,
           redirect: false,
-          callbackUrl: callbackUrl,
+          HomeUrl: HomeUrl,
         });
         if (signInResult.ok) {
           Swal.fire("success", "Registered successfully", "success");
-          router.push(callbackUrl);
+          window.location.href = HomeUrl;
         }
       } else {
         Swal.fire("error", result?.message || "Registration failed", "error");
