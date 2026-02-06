@@ -28,24 +28,30 @@ export const authOptions = {
   },
   callbacks: {
     async signIn({ user, account }) {
-      const isExist = await dbConnect(collections.USERS).findOne({
-        email: user.email,
-      });
-              console.log(isExist)
-      if (isExist) {
-        return true;
+      try {
+        const usersCollection = await dbConnect(collections.USERS);
+        const isExist = await usersCollection.findOne({
+          email: user.email,
+        });
+        console.log(isExist)
+        if (isExist) {
+          return true;
+        }
+
+        const newUser = {
+          provider: account?.provider,
+          email: user.email,
+          name: user.name,
+          Photo: user.image,
+          role: "user",
+        };
+        const result = await usersCollection.insertOne(newUser);
+
+        return result.acknowledged;
+      } catch (error) {
+        console.error('Error in signIn callback:', error);
+        return false;
       }
-
-      const newUser = {
-        provider: account?.provider,
-        email: user.email,
-        name: user.name,
-        Photo: user.image,
-        role: "user",
-      };
-      const result = await dbConnect(collections.USERS).insertOne(newUser);
-
-      return result.acknowledged;
     },
 
     async redirect({ url, baseUrl }) {
@@ -65,21 +71,27 @@ export const authOptions = {
       return session;
     },
     async jwt({ token, user, account }) {
-      if (user) {
-        if (account?.provider === "google") {
-          const dbUser = await dbConnect(collections.USERS).findOne({
-            email: user.email,
-          });
-          token.role = dbUser?.role;
-          token.email = dbUser?.email;
-          token.image = dbUser?.Photo;
-        } else {
-          token.role = user?.role;
-          token.email = user?.email;
-          token.image = user?.Photo;
+      try {
+        if (user) {
+          if (account?.provider === "google") {
+            const usersCollection = await dbConnect(collections.USERS);
+            const dbUser = await usersCollection.findOne({
+              email: user.email,
+            });
+            token.role = dbUser?.role;
+            token.email = dbUser?.email;
+            token.image = dbUser?.Photo;
+          } else {
+            token.role = user?.role;
+            token.email = user?.email;
+            token.image = user?.Photo;
+          }
         }
+        return token;
+      } catch (error) {
+        console.error('Error in jwt callback:', error);
+        return token;
       }
-      return token;
     },
   },
 };

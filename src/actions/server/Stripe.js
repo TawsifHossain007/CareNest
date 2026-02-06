@@ -61,8 +61,8 @@ export const handlePaymentSuccess = async (session_id) => {
     }
 
     const transactionId = session.payment_intent;
-    const paymentCollection = dbConnect(collections.PAYMENT);
-    const bookingCollection = dbConnect(collections.BOOKING);
+    const paymentCollection = await dbConnect(collections.PAYMENT);
+    const bookingCollection = await dbConnect(collections.BOOKING);
 
     // Prevent duplicate processing
     const existingPayment = await paymentCollection.findOne({ transactionId });
@@ -117,7 +117,7 @@ export const handlePaymentSuccess = async (session_id) => {
     const paymentResult = await paymentCollection.insertOne(paymentRecord);
 
     // Send order invoice email
-    const userCollection = dbConnect(collections.USERS);
+    const userCollection = await dbConnect(collections.USERS);
     const user = await userCollection.findOne({ email: session.metadata.customerEmail });
     
     if (user) {

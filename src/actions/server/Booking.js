@@ -9,17 +9,23 @@ import { revalidatePath } from "next/cache"
 
 
 export const GetBookings = cache(async() => {
-    const session = await getServerSession(authOptions)
-    
-    if (!session?.user) {
-        // Redirect to login if not authenticated
-        throw new Error('Unauthorized - Please login to view your bookings')
+    try {
+        const session = await getServerSession(authOptions)
+        
+        if (!session?.user) {
+            // Redirect to login if not authenticated
+            throw new Error('Unauthorized - Please login to view your bookings')
+        }
+        
+        const user = session?.user
+        const query = {customerEmail : user?.email}
+        const collection = await dbConnect(collections.BOOKING);
+        const result = await collection.find(query).toArray()
+        return result
+    } catch (error) {
+        console.error('Error fetching bookings:', error);
+        return [];
     }
-    
-    const user = session?.user
-    const query = {customerEmail : user?.email}
-    const result = await dbConnect(collections.BOOKING).find(query).toArray()
-    return result
 })
 
 export const GetBookingById = async(id) => {
@@ -31,7 +37,8 @@ export const GetBookingById = async(id) => {
         }
         
         const query = {_id : new ObjectId(id)}
-        const result = await dbConnect(collections.BOOKING).findOne(query)
+        const collection = await dbConnect(collections.BOOKING);
+        const result = await collection.findOne(query)
         return result;
     } catch (error) {
         console.error("Error in GetBookingById:", error);
@@ -40,11 +47,17 @@ export const GetBookingById = async(id) => {
 }
 
 export const DeleteBookings = async(id) => {
-    const query = {_id : new ObjectId(id)}
-    const result = await dbConnect(collections.BOOKING).deleteOne(query)
-    
-    // Revalidate the my-bookings page to refresh the cache
-    revalidatePath('/my-bookings')
-    
-    return result
+    try {
+        const query = {_id : new ObjectId(id)}
+        const collection = await dbConnect(collections.BOOKING);
+        const result = await collection.deleteOne(query)
+        
+        // Revalidate the my-bookings page to refresh the cache
+        revalidatePath('/my-bookings')
+        
+        return result
+    } catch (error) {
+        console.error('Error deleting booking:', error);
+        return { deletedCount: 0 };
+    }
 }

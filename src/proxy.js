@@ -12,13 +12,10 @@ export async function proxy(req) {
   );
 
   if (!token && isPrivateReq) {
-      // console.log(process.env.NEXTAUTH_SECRET)
-      console.log('token',token)
     return NextResponse.redirect(
       new URL(`/login?callbackUrl=${reqPath}`, req.url)
     );
   }
-  console.log('Before NextResponse')
   return NextResponse.next();
 }
 
