@@ -56,6 +56,9 @@ const AuthButtons = () => {
                     Logout
                   </button>
                 </li>
+                <Link href={"/dashboard"} className="btn btn-primary btn-outline w-full mt-2">
+                  Dashboard
+                </Link>
               </ul>
               
             </div>
