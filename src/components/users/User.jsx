@@ -5,67 +5,84 @@ import { FaUserPlus, FaUserSlash } from "react-icons/fa";
 const User = async () => {
   const users = await getUsers();
   return (
-    <div className="p-5">
-      <h1 className="text-2xl font-bold text-primary">User Management</h1>
-      <div className="overflow-x-auto mt-8">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Sl No.</th>
-              <th>User</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+    <div className="p-6">
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-primary mb-2">User Management</h1>
+        <p className="text-sm text-gray-600">Manage user roles and permissions</p>
+      </div>
+      
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
+        <div className="overflow-x-auto">
+          <table className="table w-full">
+            <thead className="bg-gradient-to-r from-primary to-primary/80 text-white">
+              <tr>
+                <th className="text-white font-semibold py-4">Sl No.</th>
+                <th className="text-white font-semibold py-4">User</th>
+                <th className="text-white font-semibold py-4">Email</th>
+                <th className="text-white font-semibold py-4">Role</th>
+                <th className="text-white font-semibold py-4">Actions</th>
+              </tr>
+            </thead>
 
-          <tbody>
-            {users.map((user, index) => (
-              <tr key={user._id}>
-                <th>{index + 1}</th>
+            <tbody>
+              {users.map((user, index) => (
+                <tr 
+                  key={user._id}
+                  className="hover:bg-primary/5 transition-colors duration-150 border-b border-gray-100"
+                >
+                  <th className="font-medium text-gray-700">{index + 1}</th>
 
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img src={user.Photo} alt={user.name} />
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-12 w-12 ring-2 ring-primary/20">
+                          <img src={user.Photo} alt={user.name} />
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="font-bold text-gray-800">{user.name}</div>
                       </div>
                     </div>
+                  </td>
 
-                    <div>
-                      <div className="font-bold">{user.name}</div>
-                    </div>
-                  </div>
-                </td>
+                  <td className="font-medium text-gray-700">{user.email}</td>
 
-                <td className="font-semibold">{user.email}</td>
-
-                <td className="font-bold capitalize">{user.role}</td>
-                <td className="flex gap-2">
-                  {user.role !== "admin" ? (
-                    <div className="tooltip" data-tip="Make Admin">
-                      <button
-                        // onClick={() => handleMakeAdmin(user)}
-                        className="btn btn-sm btn-success"
-                      >
-                        <FaUserPlus />
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="tooltip" data-tip="Remove Admin">
-                      <button
-                        // onClick={() => handleRemoveAdmin(user)}
-                        className="btn btn-sm btn-warning"
-                      >
-                        <FaUserSlash />
-                      </button>
-                    </div>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  <td>
+                    <span className={`badge ${
+                      user.role === "admin" ? "badge-primary" : 
+                      user.role === "staff" ? "badge-info" : "badge-ghost"
+                    } font-semibold capitalize`}>
+                      {user.role}
+                    </span>
+                  </td>
+                  
+                  <td className="flex gap-2">
+                    {user.role !== "admin" ? (
+                      <div className="tooltip" data-tip="Make Admin">
+                        <button
+                          // onClick={() => handleMakeAdmin(user)}
+                          className="btn btn-sm btn-success"
+                        >
+                          <FaUserPlus />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="tooltip" data-tip="Remove Admin">
+                        <button
+                          // onClick={() => handleRemoveAdmin(user)}
+                          className="btn btn-sm btn-warning"
+                        >
+                          <FaUserSlash />
+                        </button>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
