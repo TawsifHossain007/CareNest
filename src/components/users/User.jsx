@@ -1,6 +1,8 @@
 import { getUsers } from "@/actions/server/Users";
 import React from "react";
 import { FaUserPlus, FaUserSlash } from "react-icons/fa";
+import MakeAdmin from "../buttons/MakeAdmin";
+import RemoveAdmin from "../buttons/RemoveAdmin";
 
 const User = async () => {
   const users = await getUsers();
@@ -60,21 +62,11 @@ const User = async () => {
                   <td className="flex gap-2">
                     {user.role !== "admin" ? (
                       <div className="tooltip" data-tip="Make Admin">
-                        <button
-                          // onClick={() => handleMakeAdmin(user)}
-                          className="btn btn-sm btn-success"
-                        >
-                          <FaUserPlus />
-                        </button>
+                       <MakeAdmin user={user}></MakeAdmin>
                       </div>
                     ) : (
                       <div className="tooltip" data-tip="Remove Admin">
-                        <button
-                          // onClick={() => handleRemoveAdmin(user)}
-                          className="btn btn-sm btn-warning"
-                        >
-                          <FaUserSlash />
-                        </button>
+                        <RemoveAdmin user={user}></RemoveAdmin>
                       </div>
                     )}
                   </td>

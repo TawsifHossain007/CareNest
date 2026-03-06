@@ -9,7 +9,6 @@ const BookingDetails = async ({ params }) => {
   const { id } = resolvedParams;
 
   if (!id) {
-    console.log("No ID provided");
     notFound();
   }
 
@@ -23,7 +22,6 @@ const BookingDetails = async ({ params }) => {
   try {
     const booking = await GetBookingById(id);
     if (!booking) {
-      console.log("Booking not found for ID:", id);
       notFound();
     }
 

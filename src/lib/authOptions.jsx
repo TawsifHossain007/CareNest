@@ -13,8 +13,6 @@ export const authOptions = {
           email: credentials.email,
           password: credentials.password,
         });
-        // Return null if user data could not be retrieved
-        console.log(user)
         return user;
       },
     }),
@@ -33,7 +31,7 @@ export const authOptions = {
         const isExist = await usersCollection.findOne({
           email: user.email,
         });
-        console.log(isExist)
+
         if (isExist) {
           return true;
         }

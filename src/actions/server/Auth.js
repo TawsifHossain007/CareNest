@@ -41,14 +41,10 @@ export const PostUser = async (payload) => {
         
         if (data.success) {
           photoURL = data.data.url;
-        } else {
-          console.error("ImgBB upload failed:", data);
         }
       } catch (error) {
         console.error("Image upload failed:", error);
       }
-    } else {
-      console.log("No image provided in payload");
     }
 
     //create user
@@ -86,14 +82,19 @@ export const LoginUser = async (payload) => {
 
     //check payload
     if (!email || !password) {
-      return { message: "empty payload" };
+      return null;
     }
 
     //check db for user
     const usersCollection = await dbConnect(collections.USERS);
     const user = await usersCollection.findOne({ email });
     if (!user) {
-      return { message: "user doesn't exist" };
+      return null;
+    }
+
+    //check if user has a password (credentials provider)
+    if (!user.password) {
+      return null;
     }
     
     const isMatched = await bcrypt.compare(password, user?.password);
@@ -101,9 +102,9 @@ export const LoginUser = async (payload) => {
       return user;
     }
     
-    return { message: "invalid credentials" };
+    return null;
   } catch (error) {
     console.error('Error logging in user:', error);
-    return { message: "database connection failed" };
+    return null;
   }
 };

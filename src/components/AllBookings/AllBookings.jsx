@@ -49,7 +49,7 @@ const AllBookings = async () => {
                   <td className="text-green-600 font-semibold">${booking.totalCost}</td>
                   <td className="text-gray-600">{new Date(booking.serviceDate).toLocaleDateString()}</td>
                   <td>
-                    <StatusChange></StatusChange>
+                    <StatusChange bookingId={booking._id}></StatusChange>
                   </td>
                 </tr>
               ))}

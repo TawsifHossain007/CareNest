@@ -80,7 +80,6 @@ export default function Sidebar() {
             }`}
             data-tip="All Bookings"
             href={"/dashboard/all-bookings"}
-            end
           >
             <CiFileOn
               stroke="currentColor"

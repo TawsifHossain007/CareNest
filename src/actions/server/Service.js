@@ -49,8 +49,14 @@ export async function getService({
 
     const total = await collection.countDocuments(query);
 
+    // Convert ObjectId to string for client components
+    const serializedServices = services.map(service => ({
+      ...service,
+      _id: service._id.toString()
+    }));
+
     return {
-      services,
+      services: serializedServices,
       total,
       page,
       totalPages: Math.ceil(total / limit),

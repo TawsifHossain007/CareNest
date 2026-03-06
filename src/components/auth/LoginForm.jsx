@@ -36,9 +36,15 @@ const LoginForm = () => {
     }
   };
 
-  const handleAutoFill = () => {
+  const handleUserAutoFill = () => {
     const form = document.querySelector("form");
     form.email.value = "kevin@gmail.com";
+    form.password.value = "T@wsif";
+  }
+
+  const handleAdminAutoFill = () => {
+    const form = document.querySelector("form");
+    form.email.value = "haaland@gmail.com";
     form.password.value = "T@wsif";
   }
 
@@ -82,8 +88,12 @@ const LoginForm = () => {
             </Link>
           </p>
 
-          <button onClick={handleAutoFill} type="submit" className="btn btn-primary w-full mt-5">
+          <button onClick={handleUserAutoFill} type="submit" className="btn btn-primary w-full mt-5">
             Auto-Fill User Credentials
+          </button>
+
+          <button onClick={handleAdminAutoFill} type="submit" className="btn btn-primary w-full">
+            Auto-Fill Admin Credentials
           </button>
         </div>
       </div>
