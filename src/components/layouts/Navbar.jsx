@@ -6,6 +6,7 @@ import { CiBookmarkCheck } from "react-icons/ci";
 import AuthButtons from "../buttons/AuthButtons";
 import Logo from "./Logo";
 import NavLink from "../buttons/Navlink";
+import { MdOutlineDashboard } from "react-icons/md";
 
 const Navbar = () => {
   const nav = (
@@ -66,12 +67,12 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{nav}</ul>
       </div>
       <div className="navbar-end space-x-4">
-        <Link href={"/my-bookings"} className="btn btn-primary">
+        <Link href={"/dashboard"} className="btn btn-primary">
           {" "}
-          <CiBookmarkCheck
+          <MdOutlineDashboard
             size={25}
             className="font-black"
-          ></CiBookmarkCheck>{" "}
+          ></MdOutlineDashboard>{" "}
         </Link>
         <AuthButtons></AuthButtons>
       </div>

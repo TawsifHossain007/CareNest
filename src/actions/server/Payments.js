@@ -43,3 +43,25 @@ export const getSinglePayment = async (id) => {
         return {};
     }
 }
+
+export const getPaymentsByEmail = async (email) => {
+    try {
+        if (!email) {
+            return [];
+        }
+        
+        const query = { customerEmail: email };
+        const collection = await dbConnect(collections.PAYMENT);
+        const result = await collection.find(query).toArray();
+        
+        // Convert ObjectId to string for client components
+        return result.map(payment => ({
+            ...payment,
+            _id: payment._id.toString()
+        }));
+    }
+    catch(error){
+        console.error('Error fetching payments by email:', error);
+        return [];
+    }
+}

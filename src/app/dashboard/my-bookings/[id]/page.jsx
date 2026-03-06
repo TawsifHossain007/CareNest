@@ -36,7 +36,7 @@ const BookingDetails = async ({ params }) => {
         {/* Back */}
         <div className="mb-6">
           <Link
-            href="/my-bookings"
+            href="/dashboard/my-bookings"
             className="inline-flex items-center text-sm font-medium text-primary hover:underline"
           >
             ← Back to My Bookings

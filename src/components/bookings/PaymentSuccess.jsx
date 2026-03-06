@@ -117,7 +117,7 @@ export default function PaymentSuccess() {
         )}
 
         <div className="flex gap-3">
-          <Link href="/my-bookings" className="btn btn-primary flex-1">
+          <Link href="/dashboard/my-bookings" className="btn btn-primary flex-1">
             View Bookings
           </Link>
           <Link href="/" className="btn btn-primary btn-outline flex-1">

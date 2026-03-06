@@ -28,12 +28,33 @@ export const GetBookings = cache(async () => {
     console.error("Error fetching bookings:", error);
     return [];
   }
+});
 
-  //prev
-  //         return result
-  // } catch (error) {
-  //     console.error('Error fetching bookings:', error);
-  //     return [];
+export const GetAllBookings = cache(async () => {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user) {
+      throw new Error("Unauthorized - Please login to view bookings");
+    }
+
+    // Check if user is admin
+    if (session.user.role !== "admin") {
+      throw new Error("Unauthorized - Admin access required");
+    }
+
+    const collection = await dbConnect(collections.BOOKING);
+    const result = await collection.find({}).toArray();
+
+    // Convert ObjectId to string for client components
+    return result.map((booking) => ({
+      ...booking,
+      _id: booking._id.toString(),
+    }));
+  } catch (error) {
+    console.error("Error fetching all bookings:", error);
+    return [];
+  }
 });
 
 export const GetBookingById = async (id) => {
@@ -69,7 +90,7 @@ export const DeleteBookings = async (id) => {
     const result = await collection.deleteOne(query);
 
     // Revalidate the my-bookings page to refresh the cache
-    revalidatePath("/my-bookings");
+    revalidatePath("/dashboard/my-bookings");
 
     return result;
   } catch (error) {

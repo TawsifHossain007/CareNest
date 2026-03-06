@@ -2,14 +2,20 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { FaArrowLeft } from "react-icons/fa";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlineAttachMoney } from "react-icons/md";
+import { PiMoneyWavy } from "react-icons/pi";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { CiFileOn } from "react-icons/ci";
+import { BsCalendarCheck } from "react-icons/bs";
+import { CgProfile } from "react-icons/cg";
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const userRole = session?.user?.role;
 
   return (
     <div className="flex min-h-full flex-col items-start bg-white is-drawer-close:w-14 is-drawer-open:w-64">
@@ -38,55 +44,107 @@ export default function Sidebar() {
             <span className="is-drawer-close:hidden">Dashboard Home</span>
           </Link>
 
+          {userRole === "user" && (
+            <>
+              <Link
+                href="/dashboard/my-bookings"
+                className={`is-drawer-close:tooltip is-drawer-close:tooltip-right ${
+                  pathname.startsWith("/dashboard/my-bookings")
+                    ? "bg-primary text-primary-content"
+                    : ""
+                }`}
+                data-tip="My Bookings"
+              >
+                <BsCalendarCheck
+                  stroke="currentColor"
+                  className="my-1.5 inline-block size-4"
+                />
+                <span className="is-drawer-close:hidden">My Bookings</span>
+              </Link>
+
+              <Link
+                href="/dashboard/my-payments"
+                className={`is-drawer-close:tooltip is-drawer-close:tooltip-right ${
+                  pathname === "/dashboard/my-payments"
+                    ? "bg-primary text-primary-content"
+                    : ""
+                }`}
+                data-tip="My Payments"
+              >
+                <PiMoneyWavy
+                  stroke="currentColor"
+                  className="my-1.5 inline-block size-4"
+                />
+                <span className="is-drawer-close:hidden">My Payments</span>
+              </Link>
+            </>
+          )}
+
+          {userRole === "admin" && (
+            <>
+              <Link
+                href="/dashboard/payments"
+                className={`is-drawer-close:tooltip is-drawer-close:tooltip-right ${
+                  pathname === "/dashboard/payments"
+                    ? "bg-primary text-primary-content"
+                    : ""
+                }`}
+                data-tip="All Payments"
+              >
+                <MdOutlineAttachMoney
+                  stroke="currentColor"
+                  className="my-1.5 inline-block size-4"
+                />
+                <span className="is-drawer-close:hidden">All Payments</span>
+              </Link>
+
+              <Link
+                className={`is-drawer-close:tooltip is-drawer-close:tooltip-right ${
+                  pathname === "/dashboard/all-bookings"
+                    ? "bg-primary text-primary-content"
+                    : ""
+                }`}
+                data-tip="All Bookings"
+                href={"/dashboard/all-bookings"}
+              >
+                <CiFileOn
+                  stroke="currentColor"
+                  className="my-1.5 inline-block size-4"
+                />
+                <span className="is-drawer-close:hidden">All Bookings</span>
+              </Link>
+
+              <Link
+                className={`is-drawer-close:tooltip is-drawer-close:tooltip-right ${
+                  pathname === "/dashboard/users"
+                    ? "bg-primary text-primary-content"
+                    : ""
+                }`}
+                data-tip="User Management"
+                href={"/dashboard/users"}
+              >
+                <HiOutlineUserGroup
+                  stroke="currentColor"
+                  className="my-1.5 inline-block size-4"
+                />
+                <span className="is-drawer-close:hidden">User Management</span>
+              </Link>
+            </>
+          )}
           <Link
-            href="/dashboard/payments"
             className={`is-drawer-close:tooltip is-drawer-close:tooltip-right ${
-              pathname === "/dashboard/payments"
+              pathname === "/dashboard/myProfile"
                 ? "bg-primary text-primary-content"
                 : ""
             }`}
-            data-tip="Payments"
+            data-tip="My Profile"
+            href={"/dashboard/myProfile"}
           >
-            <MdOutlineAttachMoney
+            <CgProfile
               stroke="currentColor"
               className="my-1.5 inline-block size-4"
-            />
-            <span className="is-drawer-close:hidden">All Payments</span>
-          </Link>
-
-          <Link
-            className={`is-drawer-close:tooltip is-drawer-close:tooltip-right ${
-              pathname === "/dashboard/users"
-                ? "bg-primary text-primary-content"
-                : ""
-            }`}
-            data-tip="User Management"
-            href={"/dashboard/users"}
-          >
-            <HiOutlineUserGroup
-              stroke="currentColor"
-              className="my-1.5 inline-block
-                        size-4"
-            />
-
-            <span className="is-drawer-close:hidden">User Management</span>
-          </Link>
-
-          <Link
-            className={`is-drawer-close:tooltip is-drawer-close:tooltip-right ${
-              pathname === "/dashboard/all-bookings"
-                ? "bg-primary text-primary-content"
-                : ""
-            }`}
-            data-tip="All Bookings"
-            href={"/dashboard/all-bookings"}
-          >
-            <CiFileOn
-              stroke="currentColor"
-              className="my-1.5 inline-block
-                        size-4"
-            ></CiFileOn>
-            <span className="is-drawer-close:hidden">All Bookings</span>
+            ></CgProfile>
+            <span className="is-drawer-close:hidden">My Profile</span>
           </Link>
         </li>
       </ul>

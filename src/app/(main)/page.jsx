@@ -11,33 +11,15 @@ import Testimonials from "@/components/home/Testimonials";
 export default async function Home() {
   return (
     <div className="space-y-24">
-      <section>
-        <Banner></Banner>
-      </section>
-      <section>
-        <About></About>
-      </section>
-      <section>
-        <Overview></Overview>
-      </section>
-      <section>
-        <FeaturedServices></FeaturedServices>
-      </section>
-      <section>
-        <LatestService></LatestService>
-      </section>
-      <section>
-        <Experts></Experts>
-      </section>
-      <section>
-        <Testimonials></Testimonials>
-      </section>
-      <section>
-        <FAQ></FAQ>
-      </section>
-      <section>
-        <CTA></CTA>
-      </section>
+      <Banner />
+      <About />
+      <Overview />
+      <FeaturedServices />
+      <LatestService />
+      <Experts />
+      <Testimonials />
+      <FAQ />
+      <CTA />
     </div>
   );
 }

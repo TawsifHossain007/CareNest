@@ -29,7 +29,9 @@ const DashboardLayout = ({ children }) => {
                 <path d="M14 10l2 2l-2 2"></path>
               </svg>
             </label>
-            <div className="px-4 font-bold text-2xl text-white">CareNest Dashboard</div>
+            <div className="px-4 font-bold text-2xl text-white">
+              CareNest Dashboard
+            </div>
           </nav>
           <div className="p-4">{children}</div>
         </div>
