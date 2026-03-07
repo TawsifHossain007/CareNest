@@ -60,7 +60,7 @@ A comprehensive healthcare service booking and management platform built with Ne
 
 1. Clone the repository
 ```bash
-git clone [your-repo-url]
+git clone https://github.com/TawsifHossain007/CareNest
 ```
 
 2. Install dependencies
