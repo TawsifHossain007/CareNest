@@ -15,8 +15,8 @@ const RemoveAdmin = ({ user }) => {
       text: "This will remove admin privileges from this user.",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#00a2b9",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "oklch(62% 0.14 230)",
+      cancelButtonColor: "oklch(62% 0.22 25)",
       confirmButtonText: "Yes, remove them as an admin!",
     });
 
@@ -29,7 +29,7 @@ const RemoveAdmin = ({ user }) => {
             title: "Admin privileges removed!",
             text: `${user.name} is no longer an admin.`,
             icon: "success",
-            confirmButtonColor: "#00a2b9",
+            confirmButtonColor: "oklch(62% 0.14 230)",
           });
           router.refresh();
         } else {
@@ -37,7 +37,7 @@ const RemoveAdmin = ({ user }) => {
             title: "Error!",
             text: response.message,
             icon: "error",
-            confirmButtonColor: "#d33",
+            confirmButtonColor: "oklch(62% 0.14 230)",
           });
         }
       } catch (error) {

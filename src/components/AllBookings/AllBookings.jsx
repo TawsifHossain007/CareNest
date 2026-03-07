@@ -19,7 +19,7 @@ const AllBookings = ({ bookings = [] }) => {
         <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
           <div className="overflow-x-auto">
             <table className="table w-full">
-              <thead className="bg-gradient-to-r from-primary to-primary/80 text-white">
+              <thead className="bg-linear-to-r from-primary to-primary/80 text-white">
                 <tr>
                   <th className="text-white font-semibold py-4">SL No.</th>
                   <th className="text-white font-semibold py-4">Service Name</th>

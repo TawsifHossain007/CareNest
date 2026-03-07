@@ -11,8 +11,8 @@ const DeleteBooking = ({ bookingId }) => {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "oklch(62% 0.14 230)",
+      cancelButtonColor: "oklch(62% 0.22 25)",
       confirmButtonText: "Yes, cancel it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
@@ -22,6 +22,7 @@ const DeleteBooking = ({ bookingId }) => {
             title: "Cancelled!",
             text: "Your booking has been cancelled.",
             icon: "success",
+            confirmButtonColor: "oklch(62% 0.14 230)",
           });
           // revalidatePath() in the server action handles the cache invalidation
         } catch (error) {
@@ -29,6 +30,7 @@ const DeleteBooking = ({ bookingId }) => {
             title: "Error!",
             text: "Failed to cancel booking. Please try again.",
             icon: "error",
+            confirmButtonColor: "oklch(62% 0.14 230)",
           });
         }
       }

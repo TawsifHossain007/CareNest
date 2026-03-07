@@ -17,7 +17,7 @@ const MyPayments = ({ payments = [] }) => {
         ) : (
           <div className="overflow-x-auto">
             <table className="table w-full">
-              <thead className="bg-gradient-to-r from-primary to-primary/80 text-white">
+              <thead className="bg-linear-to-r from-primary to-primary/80 text-white">
                 <tr>
                   <th className="text-white font-semibold py-4">Sl No.</th>
                   <th className="text-white font-semibold py-4">

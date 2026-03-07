@@ -12,8 +12,8 @@ const StatusChange = ({ bookingId }) => {
       text: "This will change the status of this booking.",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#00a2b9",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "oklch(62% 0.14 230)",
+      cancelButtonColor: "oklch(62% 0.22 25)",
       confirmButtonText: "Yes, change it!",
     });
 
@@ -26,7 +26,7 @@ const StatusChange = ({ bookingId }) => {
             title: `Status Updated to ${newStatus}!`,
             text: `The booking status has been changed to ${newStatus}.`,
             icon: "success",
-            confirmButtonColor: "#00a2b9",
+            confirmButtonColor: "oklch(62% 0.14 230)",
           });
           router.refresh();
         } else {
@@ -34,7 +34,7 @@ const StatusChange = ({ bookingId }) => {
             title: "Error!",
             text: response.message,
             icon: "error",
-            confirmButtonColor: "#d33",
+            confirmButtonColor: "oklch(62% 0.14 230)",
           });
         }
       } catch (error) {

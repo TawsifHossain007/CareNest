@@ -1,14 +1,16 @@
+"use client";
+
 import React from "react";
-
 import Link from "next/link";
-
-import { CiBookmarkCheck } from "react-icons/ci";
 import AuthButtons from "../buttons/AuthButtons";
 import Logo from "./Logo";
 import NavLink from "../buttons/Navlink";
 import { MdOutlineDashboard } from "react-icons/md";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
+  const session = useSession();
+  const user = session?.data?.user;
   const nav = (
     <>
       <li>
@@ -17,9 +19,14 @@ const Navbar = () => {
       <li>
         <NavLink href={"/services"}>Services</NavLink>
       </li>
-      <li>
-        <NavLink href={"/dashboard"}>Dashboard</NavLink>
-      </li>
+      {user && (
+        <>
+          {" "}
+          <li>
+            <NavLink href={"/dashboard"}>Dashboard</NavLink>
+          </li>
+        </>
+      )}
       <li>
         <NavLink href={"/blogs"}>Blogs</NavLink>
       </li>

@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { SocialButtons } from "./SocialButton";
+import Image from "next/image";
+import loginImg from "../../../public/assets/login-banner.png";
 
 const LoginForm = () => {
   const params = useSearchParams();
@@ -25,14 +27,29 @@ const LoginForm = () => {
       });
 
       if (result.ok) {
-        Swal.fire("Success", "Welcome back!", "success");
+        Swal.fire({
+          title: "Success",
+          text: "Welcome back!",
+          icon: "success",
+          confirmButtonColor: "oklch(62% 0.14 230)"
+        });
         // router.push(callback);
         window.location.href = callback;
       } else {
-        Swal.fire("Error", "Invalid email or password", "error");
+        Swal.fire({
+          title: "Error",
+          text: "Invalid email or password",
+          icon: "error",
+          confirmButtonColor: "oklch(62% 0.14 230)"
+        });
       }
     } catch (error) {
-      Swal.fire("Error", "Something went wrong", "error");
+      Swal.fire({
+        title: "Error",
+        text: "Something went wrong",
+        icon: "error",
+        confirmButtonColor: "oklch(62% 0.14 230)"
+      });
     }
   };
 
@@ -49,7 +66,7 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200">
+    <div className="min-h-screen flex items-center justify-center gap-0 md:gap-20 bg-base-200">
       <div className="card w-full max-w-sm shadow-xl bg-base-100">
         <div className="card-body">
           <h2 className="text-2xl font-bold text-center text-primary">Login</h2>
@@ -96,6 +113,10 @@ const LoginForm = () => {
             Auto-Fill Admin Credentials
           </button>
         </div>
+      </div>
+
+      <div>
+        <Image src={loginImg} alt="Login Banner" width={500} height={500} className="hidden lg:block" />
       </div>
     </div>
   );

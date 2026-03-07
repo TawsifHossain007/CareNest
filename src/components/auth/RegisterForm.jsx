@@ -7,6 +7,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { PostUser } from "@/actions/server/Auth";
+import loginImg from "../../../public/assets/login-banner.png";
+import Image from "next/image";
 
 export const RegisterForm = () => {
   const params = useSearchParams();
@@ -51,20 +53,35 @@ export const RegisterForm = () => {
           HomeUrl: HomeUrl,
         });
         if (signInResult.ok) {
-          Swal.fire("success", "Registered successfully", "success");
+          Swal.fire({
+            title: "Success",
+            text: "Registered successfully",
+            icon: "success",
+            confirmButtonColor: "oklch(62% 0.14 230)"
+          });
           window.location.href = HomeUrl;
         }
       } else {
-        Swal.fire("error", result?.message || "Registration failed", "error");
+        Swal.fire({
+          title: "Error",
+          text: result?.message || "Registration failed",
+          icon: "error",
+          confirmButtonColor: "oklch(62% 0.14 230)"
+        });
       }
     } catch (error) {
       console.error("Registration error:", error);
-      Swal.fire("error", "Something went wrong", "error");
+      Swal.fire({
+        title: "Error",
+        text: "Something went wrong",
+        icon: "error",
+        confirmButtonColor: "oklch(62% 0.14 230)"
+      });
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200">
+    <div className="min-h-screen flex items-center justify-center gap-0 md:gap-20 bg-base-200">
       <div className="card w-full max-w-sm shadow-xl bg-base-100">
         <div className="card-body">
           <h2 className="text-2xl font-bold text-center text-primary">Create Account</h2>
@@ -141,6 +158,10 @@ export const RegisterForm = () => {
             </Link>
           </p>
         </div>
+      </div>
+
+      <div>
+        <Image src={loginImg} alt="Login Banner" width={500} height={500} className="hidden lg:block" />
       </div>
     </div>
   );

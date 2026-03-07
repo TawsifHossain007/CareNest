@@ -3,6 +3,7 @@ import React from "react";
 import { FaUserPlus, FaUserSlash } from "react-icons/fa";
 import MakeAdmin from "../buttons/MakeAdmin";
 import RemoveAdmin from "../buttons/RemoveAdmin";
+import Image from "next/image";
 
 const User = async () => {
   const users = await getUsers();
@@ -16,7 +17,7 @@ const User = async () => {
       <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
         <div className="overflow-x-auto">
           <table className="table w-full">
-            <thead className="bg-gradient-to-r from-primary to-primary/80 text-white">
+            <thead className="bg-linear-to-r from-primary to-primary/80 text-white">
               <tr>
                 <th className="text-white font-semibold py-4">Sl No.</th>
                 <th className="text-white font-semibold py-4">User</th>
@@ -38,7 +39,7 @@ const User = async () => {
                     <div className="flex items-center gap-3">
                       <div className="avatar">
                         <div className="mask mask-squircle h-12 w-12 ring-2 ring-primary/20">
-                          <img src={user.Photo} alt={user.name} />
+                          <Image src={user.Photo} alt={user.name} width={48} height={48} />
                         </div>
                       </div>
 
@@ -53,7 +54,7 @@ const User = async () => {
                   <td>
                     <span className={`badge ${
                       user.role === "admin" ? "badge-primary" : 
-                      user.role === "staff" ? "badge-info" : "badge-ghost"
+                      user.role === "user" ? "badge-ghost" : "badge-info"
                     } font-semibold capitalize`}>
                       {user.role}
                     </span>

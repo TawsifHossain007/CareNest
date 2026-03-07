@@ -9,10 +9,20 @@ export const SocialButtons = () => {
     const handleSignIn = async() => {
         const result = await signIn("google", {  callbackUrl: params.get("callbackUrl") || "/",})
         if(result.ok){
-            Swal.fire("success","Welcome","success")
+            Swal.fire({
+              title: "Success",
+              text: "Welcome",
+              icon: "success",
+              confirmButtonColor: "oklch(62% 0.14 230)"
+            })
         }
         else{
-             Swal.fire("error","Sorry","error")
+             Swal.fire({
+              title: "Error",
+              text: "Sorry",
+              icon: "error",
+              confirmButtonColor: "oklch(62% 0.14 230)"
+            })
         }
     }
   return (

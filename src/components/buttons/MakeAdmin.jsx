@@ -15,8 +15,8 @@ const MakeAdmin = ({ user }) => {
       text: "Give admin privileges to this user.",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#00a2b9",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "oklch(62% 0.14 230)",
+      cancelButtonColor: "oklch(62% 0.22 25)",
       confirmButtonText: "Yes, make them an admin!",
     });
 
@@ -29,7 +29,7 @@ const MakeAdmin = ({ user }) => {
             title: "Admin privileges granted!",
             text: `${user.name} is now an admin.`,
             icon: "success",
-            confirmButtonColor: "#00a2b9",
+            confirmButtonColor: "oklch(62% 0.14 230)",
           });
           router.refresh();
         } else {
@@ -37,7 +37,7 @@ const MakeAdmin = ({ user }) => {
             title: "Error!",
             text: response.message,
             icon: "error",
-            confirmButtonColor: "#d33",
+            confirmButtonColor: "oklch(62% 0.14 230)",
           });
         }
       } catch (error) {
